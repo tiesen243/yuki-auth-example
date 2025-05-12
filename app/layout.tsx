@@ -3,6 +3,7 @@ import '@/app/globals.css'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { ThemeProvider } from 'next-themes'
 
+import { SessionProvider } from '@/hooks/use-session'
 import { createMetadata } from '@/lib/metadata'
 import { cn } from '@/lib/utils'
 
@@ -31,7 +32,7 @@ export default function RootLayout({
         )}
       >
         <ThemeProvider attribute="class" disableTransitionOnChange>
-          {children}
+          <SessionProvider>{children}</SessionProvider>
         </ThemeProvider>
       </body>
     </html>

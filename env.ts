@@ -13,6 +13,14 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(['development', 'production', 'test'])
       .default('development'),
+
+    DATABASE_URL: z.string(),
+
+    AUTH_PROXY_URL: z.string().optional(),
+    AUTH_SECRET: z.string().optional(),
+
+    DISCORD_CLIENT_ID: z.string(),
+    DISCORD_CLIENT_SECRET: z.string(),
   },
 
   /**

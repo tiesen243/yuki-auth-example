@@ -1,0 +1,29 @@
+import { getBaseUrl } from '@/lib/utils'
+
+export interface ProviderUserData {
+  providerAccountId: string
+  name: string
+  email: string
+  image: string
+}
+
+export abstract class BaseProvider {
+  protected abstract provider: unknown
+
+  protected abstract readonly API_URL: string
+  protected abstract readonly DEFAULT_SCOPES: string[]
+
+  abstract createAuthorizationURL(
+    state: string,
+    codeVerifier: string | null,
+  ): URL
+
+  abstract fetchUserData(
+    code: string,
+    codeVerifier: string | null,
+  ): Promise<ProviderUserData>
+
+  protected createCallbackUrl(provider: string) {
+    return `${getBaseUrl()}/api/auth/${provider}/callback`
+  }
+}
