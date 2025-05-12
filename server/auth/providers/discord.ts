@@ -1,12 +1,11 @@
 import { Discord } from 'arctic'
 
-import { env } from '@/env'
 import { BaseProvider } from '@/server/auth/providers/base'
 
 export class DiscordProvider extends BaseProvider {
   protected provider = new Discord(
-    env.DISCORD_CLIENT_ID,
-    env.DISCORD_CLIENT_SECRET,
+    process.env.DISCORD_CLIENT_ID ?? '',
+    process.env.DISCORD_CLIENT_SECRET ?? '',
     this.createCallbackUrl('discord'),
   )
 
