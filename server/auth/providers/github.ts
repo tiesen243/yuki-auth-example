@@ -2,6 +2,13 @@ import { GitHub } from 'arctic'
 
 import { BaseProvider } from '@/server/auth/providers/base'
 
+interface GithubUserResponse {
+  id: string
+  name: string
+  email: string
+  avatar_url: string
+}
+
 export class GithubProvider extends BaseProvider {
   protected provider = new GitHub(
     process.env.GITHUB_CLIENT_ID ?? '',
@@ -29,19 +36,13 @@ export class GithubProvider extends BaseProvider {
     }
 
     const user = (await response.json()) as GithubUserResponse
+    console.log(user)
 
     return {
-      providerAccountId: user.id,
+      accountId: user.id,
       name: user.name,
       email: user.email,
       image: user.avatar_url,
     }
   }
-}
-
-interface GithubUserResponse {
-  id: string
-  name: string
-  email: string
-  avatar_url: string
 }

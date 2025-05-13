@@ -1,29 +1,50 @@
-import { sha3_512 } from '@oslojs/crypto/sha3'
-import { encodeHexLowerCase } from '@oslojs/encoding'
+import { constantTimeEqual } from '@oslojs/crypto/subtle'
+import { decodeHex, encodeHexLowerCase } from '@oslojs/encoding'
 
-import { env } from '@/env'
+export class Password {
+  private iterations: number
+  private dkLen: number
 
-/**
- * Secret key used for password hashing
- * Must be set in environment variables
- */
-const AUTH_SECRET = env.AUTH_SECRET
+  constructor(options?: { N?: number; p?: number; dkLen?: number }) {
+    this.iterations = (options?.N ?? 16384) * (options?.p ?? 1)
+    this.dkLen = options?.dkLen ?? 64
+  }
 
-function hash(password: string): string {
-  // Salt the password with the authentication secret
-  const salted = `${password}${AUTH_SECRET}`
+  public async hash(password: string): Promise<string> {
+    const salt = encodeHexLowerCase(crypto.getRandomValues(new Uint8Array(16)))
+    const key = await this.generateKey(password, salt)
+    return `${salt}:${encodeHexLowerCase(key)}`
+  }
 
-  // Convert the salted password to bytes, hash it, and encode as hex
-  const passwordBytes = new TextEncoder().encode(salted)
-  const hashedBytes = sha3_512(passwordBytes)
-  const hashedHex = encodeHexLowerCase(hashedBytes)
+  public async verify(hash: string, password: string): Promise<boolean> {
+    const [salt, key] = hash.split(':')
+    const targetKey = await this.generateKey(password, salt ?? '')
+    return constantTimeEqual(targetKey, decodeHex(key ?? ''))
+  }
 
-  // Append the secret to the hash for additional security
-  return `${hashedHex}${AUTH_SECRET}`
+  private async generateKey(
+    password: string,
+    salt: string,
+  ): Promise<Uint8Array> {
+    const importedKey = await crypto.subtle.importKey(
+      'raw',
+      new TextEncoder().encode(password.normalize('NFKC')),
+      { name: 'PBKDF2' },
+      false,
+      ['deriveBits'],
+    )
+
+    const derivedBits = await crypto.subtle.deriveBits(
+      {
+        name: 'PBKDF2',
+        salt: decodeHex(salt),
+        iterations: this.iterations,
+        hash: 'SHA-256',
+      },
+      importedKey,
+      this.dkLen * 8, // Convert bytes to bits
+    )
+
+    return new Uint8Array(derivedBits)
+  }
 }
-
-function verify(password: string, hashedPassword: string): boolean {
-  return hash(password) === hashedPassword
-}
-
-export { hash, verify }

@@ -1,7 +1,7 @@
 import { getBaseUrl } from '@/lib/utils'
 
 export interface ProviderUserData {
-  providerAccountId: string
+  accountId: string
   name: string
   email: string
   image: string

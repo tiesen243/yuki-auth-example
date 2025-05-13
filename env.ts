@@ -17,7 +17,6 @@ export const env = createEnv({
     DATABASE_URL: z.string(),
 
     AUTH_PROXY_URL: z.string().optional(),
-    AUTH_SECRET: z.string().optional(),
 
     DISCORD_CLIENT_ID: z.string(),
     DISCORD_CLIENT_SECRET: z.string(),
