@@ -7,17 +7,17 @@ import {
 } from '@oslojs/encoding'
 import { and, eq } from 'drizzle-orm'
 
-import type { SessionResult } from '../types'
-import { db } from '@/server/db'
-import { accounts, sessions, users } from '@/server/db/schema'
+import type { SessionResult } from '@/server/auth/types'
 import {
   SESSION_COOKIE_NAME,
   SESSION_EXPIRATION,
   SESSION_REFRESH_THRESHOLD,
   TOKEN_BYTES,
-} from '../config'
-import { deleteCookie, getCookie } from './cookies'
-import { Password } from './password'
+} from '@/server/auth/config'
+import { deleteCookie, getCookie } from '@/server/auth/core/cookies'
+import { Password } from '@/server/auth/core/password'
+import { db } from '@/server/db'
+import { accounts, sessions, users } from '@/server/db/schema'
 
 async function createSession(
   userId: string,
