@@ -1,7 +1,7 @@
 import { constantTimeEqual } from '@oslojs/crypto/subtle'
 import { decodeHex, encodeHexLowerCase } from '@oslojs/encoding'
 
-import { scrypt } from './scrypt'
+import { scrypt } from '@/server/auth/core/password/scrypt'
 
 export class Password {
   private N: number
