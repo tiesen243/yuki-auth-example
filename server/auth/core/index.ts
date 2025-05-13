@@ -1,15 +1,15 @@
 import { generateCodeVerifier, generateState, OAuth2RequestError } from 'arctic'
 
-import type { AuthOptions, Providers, SessionResult } from '../types'
-import { SESSION_COOKIE_NAME } from '../config'
-import { deleteCookie, getCookie, setCookie } from './cookies'
+import type { AuthOptions, Providers, SessionResult } from '@/server/auth/types'
+import { SESSION_COOKIE_NAME } from '@/server/auth/config'
+import { deleteCookie, getCookie, setCookie } from '@/server/auth/core/cookies'
 import {
   createSession,
   getOrCreateUserFromOAuth,
   signIn,
   signOut,
   validateToken,
-} from './queries'
+} from '@/server/auth/core/queries'
 
 export function Auth<TProviders extends Providers>(
   providers: AuthOptions<TProviders>,
