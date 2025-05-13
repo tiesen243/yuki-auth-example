@@ -3,7 +3,6 @@ import { cookies } from 'next/headers'
 import { generateCodeVerifier, generateState, OAuth2RequestError } from 'arctic'
 
 import type { AuthOptions, Providers, SessionResult } from '@/server/auth/types'
-import { env } from '@/env'
 import { SESSION_COOKIE_NAME } from '@/server/auth/config'
 import {
   createSession,
@@ -17,7 +16,7 @@ const DEFAULT_COOKIE_OPTIONS = {
   path: '/',
   httpOnly: true,
   sameSite: 'lax' as const,
-  secure: env.NODE_ENV === 'production',
+  secure: process.env.NODE_ENV === 'production',
 }
 
 export function Auth<TProviders extends Providers>(
@@ -45,11 +44,15 @@ export function Auth<TProviders extends Providers>(
     if (!provider) throw new Error(`Provider ${providerName} is not supported`)
 
     // Handle mobile development redirects
-    if (redirectTo.startsWith('exp://') && env.NODE_ENV === 'development') {
-      if (!env.AUTH_PROXY_URL) throw new Error('AUTH_PROXY_URL is not set')
+    if (
+      redirectTo.startsWith('exp://') &&
+      process.env.NODE_ENV === 'development'
+    ) {
+      if (!process.env.AUTH_PROXY_URL)
+        throw new Error('AUTH_PROXY_URL is not set')
 
       const redirectUrl = new URL(
-        `https://${env.AUTH_PROXY_URL}${url.pathname}`,
+        `https://${process.env.AUTH_PROXY_URL}${url.pathname}`,
       )
       redirectUrl.searchParams.set('redirect_to', redirectTo)
       return createRedirectResponse(redirectUrl)
