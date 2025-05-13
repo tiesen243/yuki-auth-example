@@ -1,6 +1,5 @@
 'use server'
 
-import { cookies } from 'next/headers'
 import { sha256 } from '@oslojs/crypto/sha2'
 import {
   encodeBase32LowerCaseNoPadding,
@@ -17,6 +16,7 @@ import {
   SESSION_REFRESH_THRESHOLD,
   TOKEN_BYTES,
 } from '../config'
+import { deleteCookie, getCookie } from './cookies'
 import { Password } from './password'
 
 async function createSession(
@@ -106,15 +106,14 @@ async function signIn(input: {
 }
 
 async function signOut(request?: Request): Promise<void> {
-  const nextCookies = await cookies()
   const token =
-    nextCookies.get(SESSION_COOKIE_NAME)?.value ??
+    (await getCookie(SESSION_COOKIE_NAME, request)) ??
     request?.headers.get('Authorization')?.replace('Bearer ', '') ??
     ''
 
   if (token) {
     await invalidateToken(token)
-    if (!request) nextCookies.delete(SESSION_COOKIE_NAME)
+    if (!request) await deleteCookie(SESSION_COOKIE_NAME)
   }
 }
 
