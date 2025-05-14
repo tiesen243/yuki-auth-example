@@ -5,6 +5,7 @@ import { FigmaProvider } from '@/server/auth/providers/figma'
 import { GithubProvider } from '@/server/auth/providers/github'
 import { GoogleProvider } from '@/server/auth/providers/google'
 import { NotionProvider } from '@/server/auth/providers/notion'
+import { SpotifyProvider } from './providers/spotify'
 
 /**
  * Configuration constants for session management
@@ -31,4 +32,5 @@ export const authOptions = {
   github: new GithubProvider(),
   google: new GoogleProvider(),
   notion: new NotionProvider(),
+  spotify: new SpotifyProvider(),
 } satisfies AuthOptions
