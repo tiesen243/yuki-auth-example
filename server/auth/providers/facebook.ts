@@ -5,8 +5,8 @@ import { BaseProvider } from './base'
 
 interface FacebookUserResponse {
   id: string
-  name: string
   email: string
+  name: string
   picture: { data: { url: string } }
 }
 
@@ -47,8 +47,8 @@ export class FacebookProvider extends BaseProvider {
 
     return {
       accountId: user.id,
-      name: user.name,
       email: user.email,
+      name: user.name,
       image: user.picture.data.url,
     }
   }

@@ -1,8 +1,9 @@
 import type { AuthOptions } from '@/server/auth/types'
 import { DiscordProvider } from '@/server/auth/providers/discord'
-import { FacebookProvider } from './providers/facebook'
-import { GithubProvider } from './providers/github'
-import { GoogleProvider } from './providers/google'
+import { FacebookProvider } from '@/server/auth/providers/facebook'
+import { GithubProvider } from '@/server/auth/providers/github'
+import { GoogleProvider } from '@/server/auth/providers/google'
+import { FigmaProvider } from './providers/figma'
 
 /**
  * Configuration constants for session management
@@ -25,6 +26,7 @@ export const SESSION_COOKIE_NAME = 'auth_token' // Name of the session cookie
 export const authOptions = {
   discord: new DiscordProvider(),
   facebook: new FacebookProvider(),
+  figma: new FigmaProvider(),
   github: new GithubProvider(),
   google: new GoogleProvider(),
 } satisfies AuthOptions
