@@ -21,7 +21,7 @@ export default async function SSRPage() {
           <pre>{JSON.stringify(session, null, 2)}</pre>
 
           <h2 className="text-2xl font-bold">Linked Accounts</h2>
-          <pre className="max-h-64 overflow-y-auto">
+          <pre className="max-h-80 overflow-y-auto">
             {JSON.stringify(linkAccounts, null, 2)}
           </pre>
         </div>

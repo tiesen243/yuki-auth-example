@@ -5,7 +5,7 @@ import { FigmaProvider } from '@/server/auth/providers/figma'
 import { GithubProvider } from '@/server/auth/providers/github'
 import { GoogleProvider } from '@/server/auth/providers/google'
 import { NotionProvider } from '@/server/auth/providers/notion'
-import { SpotifyProvider } from './providers/spotify'
+import { SpotifyProvider } from '@/server/auth/providers/spotify'
 
 /**
  * Configuration constants for session management
