@@ -1,9 +1,10 @@
 import type { AuthOptions } from '@/server/auth/types'
 import { DiscordProvider } from '@/server/auth/providers/discord'
 import { FacebookProvider } from '@/server/auth/providers/facebook'
+import { FigmaProvider } from '@/server/auth/providers/figma'
 import { GithubProvider } from '@/server/auth/providers/github'
 import { GoogleProvider } from '@/server/auth/providers/google'
-import { FigmaProvider } from './providers/figma'
+import { NotionProvider } from '@/server/auth/providers/notion'
 
 /**
  * Configuration constants for session management
@@ -29,4 +30,5 @@ export const authOptions = {
   figma: new FigmaProvider(),
   github: new GithubProvider(),
   google: new GoogleProvider(),
+  notion: new NotionProvider(),
 } satisfies AuthOptions
