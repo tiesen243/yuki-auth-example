@@ -3,6 +3,7 @@ import type { BaseProvider } from '@/server/auth/providers/base'
 import { users } from '@/server/db/schema'
 
 export type Providers = Record<string, BaseProvider>
+
 export interface AuthOptions<T extends Providers = Providers> {
   cookieKey: string
   cookieOptions: {
