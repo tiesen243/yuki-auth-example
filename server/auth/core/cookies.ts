@@ -8,12 +8,7 @@
  */
 import { cookies } from 'next/headers'
 
-import type { AuthOptions } from '../types'
-
-/**
- * Default cookie options that will be applied to all cookies
- * unless explicitly overridden
- */
+import type { AuthOptions } from '@/server/auth/types'
 
 async function getCookie(
   key: string,
