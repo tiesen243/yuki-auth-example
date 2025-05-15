@@ -12,14 +12,22 @@ export const AuthShowCase: React.FC = () => {
       <div>
         <p>Not authenticated</p>
         <div className="flex flex-col gap-2">
-          {(['discord', 'facebook', 'google', 'github'] as const).map(
-            (provider) => (
-              <Button key={provider} onClick={() => signIn(provider)}>
-                Sign In with{' '}
-                {provider.charAt(0).toUpperCase() + provider.slice(1)}
-              </Button>
-            ),
-          )}
+          {(
+            [
+              'discord',
+              'facebook',
+              'figma',
+              'github',
+              'google',
+              'notion',
+              'spotify',
+            ] as const
+          ).map((provider) => (
+            <Button key={provider} onClick={() => signIn(provider)}>
+              Sign In with{' '}
+              {provider.charAt(0).toUpperCase() + provider.slice(1)}
+            </Button>
+          ))}
         </div>
       </div>
     )
