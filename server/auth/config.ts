@@ -4,7 +4,6 @@ import { FacebookProvider } from '@/server/auth/providers/facebook'
 import { FigmaProvider } from '@/server/auth/providers/figma'
 import { GithubProvider } from '@/server/auth/providers/github'
 import { GoogleProvider } from '@/server/auth/providers/google'
-import { MicrosoftProvider } from '@/server/auth/providers/microsoft'
 import { NotionProvider } from '@/server/auth/providers/notion'
 import { SpotifyProvider } from '@/server/auth/providers/spotify'
 
@@ -36,7 +35,6 @@ export const authOptions = {
     figma: new FigmaProvider(),
     github: new GithubProvider(),
     google: new GoogleProvider(),
-    microsoft: new MicrosoftProvider(),
     notion: new NotionProvider(),
     spotify: new SpotifyProvider(),
   },

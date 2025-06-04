@@ -1,9 +1,6 @@
-import { cookies } from 'next/headers'
-
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { env } from '@/env'
-import { auth, signIn, signOut } from '@/server/auth'
+import { auth, signIn, signOut } from '@/lib/auth'
 import { db } from '@/server/db'
 
 export default async function SSRPage() {
@@ -50,17 +47,9 @@ export default async function SSRPage() {
           className="flex flex-col gap-4"
           action={async (formData: FormData) => {
             'use server'
-
-            const { sessionToken, expires } = await signIn({
+            await signIn({
               email: formData.get('email') as string,
               password: formData.get('password') as string,
-            })
-            ;(await cookies()).set('auth_token', sessionToken, {
-              path: '/',
-              httpOnly: true,
-              sameSite: 'lax' as const,
-              secure: env.NODE_ENV === 'production',
-              expires,
             })
           }}
         >
