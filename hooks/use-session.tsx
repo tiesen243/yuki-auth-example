@@ -4,7 +4,11 @@ import * as React from 'react'
 
 import type { Options, SessionResult } from '@/server/auth/types'
 
-type Provider = 'credentials' | keyof Options['providers']
+type Provider =
+  | 'credentials'
+  | (keyof Options['providers'] extends never
+      ? undefined
+      : keyof Options['providers'])
 
 type SessionContextValue = {
   signIn: <TProvider extends Provider>(
